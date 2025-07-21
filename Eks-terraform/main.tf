@@ -33,7 +33,7 @@ data "aws_subnets" "public" {
   }
 }
 #cluster provision
-resource "aws_eks_cluster" "example" {
+resource "aws_eks_cluster" "example-eks" {
   name     = "EKS_CLOUD"
   role_arn = aws_iam_role.example.arn
 
@@ -79,8 +79,8 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEC2ContainerRegistryRea
 }
 
 #create node group
-resource "aws_eks_node_group" "example" {
-  cluster_name    = aws_eks_cluster.example.name
+resource "aws_eks_node_group" "example-node" {
+  cluster_name    = aws_eks_cluster.example-eks.name
   node_group_name = "Node-cloud"
   node_role_arn   = aws_iam_role.example1.arn
   subnet_ids      = data.aws_subnets.public.ids
